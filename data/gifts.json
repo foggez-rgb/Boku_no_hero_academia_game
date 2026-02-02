@@ -1,0 +1,31 @@
+[
+  { "id": "heart", "name": "Розовое сердце", "price": 15, "affinity": 1, "tags": ["романтика"] },
+  { "id": "bear", "name": "Плюшевый мишка", "price": 15, "affinity": 1, "tags": ["милота"] },
+  { "id": "gift_box", "name": "Подарочная коробка", "price": 25, "affinity": 1, "tags": ["праздник"] },
+  { "id": "rose", "name": "Красная роза", "price": 25, "affinity": 2, "tags": ["романтика"] },
+  { "id": "cake", "name": "Торт", "price": 50, "affinity": 3, "tags": ["еда"] },
+
+  { "id": "flowers", "name": "Букет цветов", "price": 50, "affinity": 3, "tags": ["романтика"] },
+  { "id": "rocket", "name": "Ракета", "price": 50, "affinity": 2, "tags": ["экшен"] },
+  { "id": "trophy", "name": "Кубок", "price": 100, "affinity": 4, "tags": ["достижение"] },
+  { "id": "ring", "name": "Кольцо", "price": 100, "affinity": 5, "tags": ["романтика"] },
+  { "id": "diamond", "name": "Алмаз", "price": 100, "affinity": 5, "tags": ["богато"] },
+
+  { "id": "champagne", "name": "Шампанское", "price": 50, "affinity": 2, "tags": ["праздник"] },
+  { "id": "ramen", "name": "Рамен", "price": 250, "affinity": 4, "tags": ["еда"] },
+  { "id": "lollipop", "name": "Леденец", "price": 280, "affinity": 1, "tags": ["еда"] },
+  { "id": "icecream", "name": "Мороженое", "price": 375, "affinity": 2, "tags": ["еда"] },
+  { "id": "calendar", "name": "Календарь", "price": 320, "affinity": 2, "tags": ["праздник"] },
+
+  { "id": "sock", "name": "Новогодний носок", "price": 300, "affinity": 2, "tags": ["праздник"] },
+  { "id": "clover", "name": "Клевер", "price": 287, "affinity": 3, "tags": ["удача"] },
+  { "id": "moon", "name": "Полумесяц", "price": 380, "affinity": 3, "tags": ["романтика"] },
+  { "id": "gingerbread", "name": "Пряничный человечек", "price": 550, "affinity": 3, "tags": ["праздник"] },
+  { "id": "lightsaber", "name": "Энергомеч", "price": 613, "affinity": 5, "tags": ["экшен"] },
+
+  { "id": "key_heart", "name": "Кнопка с сердцем", "price": 613, "affinity": 4, "tags": ["романтика"] },
+  { "id": "cake_big", "name": "Большой торт", "price": 300, "affinity": 4, "tags": ["еда"] },
+  { "id": "money_bouquet", "name": "Денежный букет", "price": 300, "affinity": 4, "tags": ["богато"] },
+  { "id": "sparkler", "name": "Бенгальский огонь", "price": 500, "affinity": 2, "tags": ["праздник"] },
+  { "id": "toy_basket", "name": "Корзина с игрушками", "price": 613, "affinity": 3, "tags": ["милота"] }
+]
