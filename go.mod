@@ -1,3 +1,3 @@
-module boku_no_hero_academia_game
+module bnhagame
 
 go 1.22
