@@ -1,17 +1,19 @@
 package characters
 
-type Mood int
+type Emotions struct {
+	Anger       int
+	Respect     int
+	Affection   int
+}
 
-const (
-	Neutral Mood = iota
-	Angry
-	Annoyed
-	Friendly
-	Flustered // смущён / влюблён
-)
+type Memory struct {
+	LastGift string
+	TimesTalked int
+}
 
 type Character interface {
 	GetName() string
-	GetMood() Mood
-	Talk(input string) string
+	React(text string) string
+	ReceiveGift(gift Gift)
+	PrintEmotions()
 }
