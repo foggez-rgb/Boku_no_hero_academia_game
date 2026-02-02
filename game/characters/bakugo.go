@@ -1,105 +1,53 @@
 package characters
 
-import "strings"
-
-/* ===== СОСТОЯНИЯ ===== */
-
-type EmotionState struct {
-	Anger        int
-	Affection    int
-	Trust        int
-	Jealousy     int
-	LoveUnlocked bool
-}
+import (
+	"fmt"
+	"yourmodule/game"
+)
 
 type Bakugo struct {
-	Name    string
-	Emotion EmotionState
-	Memory  map[string]string
+	Romance int
 }
-
-/* ===== СОЗДАНИЕ ===== */
 
 func NewBakugo() *Bakugo {
 	return &Bakugo{
-		Name: "Бакуго Кацуки",
-		Emotion: EmotionState{
-			Anger:     60,
-			Affection: 10,
-			Trust:     15,
-		},
-		Memory: make(map[string]string),
+		Romance: 10,
 	}
 }
-
-/* ===== INTERFACE ===== */
 
 func (b *Bakugo) GetName() string {
-	return b.Name
+	return "Бакуго Кацуки"
 }
 
-/* ===== ПОДАРКИ ===== */
-
-func (b *Bakugo) GiveGift(gift Gift) string {
-	b.Emotion.Affection += gift.Affection
-	b.Emotion.Trust += gift.Trust
-	b.Emotion.Anger += gift.Anger
-
-	if gift.ID == "letter" {
-		b.Memory["letter"] = "Ты написал ему письмо"
-		return "Ч-ЧТО ЭТО?! …Я не выброшу. Даже не надейся."
-	}
-
-	if gift.ID == "spicy_food" {
-		return "Хм… норм. Ты не полный идиот."
-	}
-
-	return "Тц. Ладно."
+func (b *Bakugo) GetRomance() int {
+	return b.Romance
 }
 
-/* ===== ДИАЛОГ ===== */
-
-func (b *Bakugo) React(input string) string {
-	text := strings.ToLower(input)
-
-	if strings.Contains(text, "люблю") {
-		b.Emotion.Affection += 15
-		b.Emotion.Trust += 10
-		return "ТЫ ЧТО НЕСЁШЬ?! …Идиот… но продолжай."
+func (b *Bakugo) AddRomance(value int) {
+	b.Romance += value
+	if b.Romance < 0 {
+		b.Romance = 0
 	}
-
-	if strings.Contains(text, "другой") {
-		b.Emotion.Jealousy += 15
-		return "А МНЕ КАКОЕ ДЕЛО?! …Только попробуй."
+	if b.Romance > 100 {
+		b.Romance = 100
 	}
-
-	if strings.Contains(text, "дурак") {
-		b.Emotion.Anger += 20
-		return "Я ТЕБЯ ВЗОРВУ!"
-	}
-
-	return "Говори нормально."
 }
 
-/* ===== РОМАНС ===== */
+func (b *Bakugo) React(input string, state *game.GameState) string {
+	stage := game.GetRomanceStage(b.Romance)
 
-func (b *Bakugo) CheckRomance() string {
-	if b.Emotion.Affection >= 80 && b.Emotion.Trust >= 70 {
-		if !b.Emotion.LoveUnlocked {
-			b.Emotion.LoveUnlocked = true
-			return b.confess()
-		}
+	switch stage {
+	case game.Hostile:
+		return "Чё ты несёшь, придурок?!"
+	case game.Annoyed:
+		return "Тц… хватит меня доставать."
+	case game.Neutral:
+		return "Хм. Ну… нормально."
+	case game.Attached:
+		return "Эй… ты чё так смотришь?"
+	case game.InLove:
+		return "Заткнись… Я, блядь, волнуюсь."
+	default:
+		return fmt.Sprintf("…%s", input)
 	}
-	return ""
-}
-
-func (b *Bakugo) confess() string {
-	return `
-Чёрт…
-Я не умею в слова.
-
-Но если ты уйдёшь —
-мне будет хреново.
-
-Так что… оставайся.`
 }
