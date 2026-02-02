@@ -1,44 +1,47 @@
 package ai
 
-import (
-	"fmt"
-	"yourmodule/game"
-	"yourmodule/game/characters"
-)
+import "fmt"
 
-func BuildPrompt(
-	character characters.Character,
-	state *game.GameState,
-	playerInput string,
-	baseReply string,
-) string {
+type PromptData struct {
+	Style       Style
+	Romance     int
+	PlayerText  string
+	BaseReply   string
+}
 
-	stage := game.GetRomanceStage(character.GetRomance())
-
+func BuildPrompt(data PromptData) string {
 	return fmt.Sprintf(`
 Ты — персонаж из аниме My Hero Academia.
 
 Имя: %s
-Характер: агрессивный, вспыльчивый, грубый, но честный.
-Романтическая стадия: %v
+Описание: %s
 
-Правила:
-- Не будь милым
-- Не извиняйся
-- Говори грубо
-- Если влюблён — скрывай это злостью
+Правила поведения:
+%s
+
+Романтический уровень: %d
 
 Фраза игрока:
 "%s"
 
-Твой базовый ответ:
+Базовый ответ персонажа:
 "%s"
 
 Перепиши базовый ответ, усилив стиль персонажа.
 `,
-		character.GetName(),
-		stage,
-		playerInput,
-		baseReply,
+		data.Style.Name,
+		data.Style.Description,
+		formatRules(data.Style.Rules),
+		data.Romance,
+		data.PlayerText,
+		data.BaseReply,
 	)
+}
+
+func formatRules(rules []string) string {
+	result := ""
+	for _, r := range rules {
+		result += "- " + r + "\n"
+	}
+	return result
 }
