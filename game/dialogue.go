@@ -1,21 +1,31 @@
 package game
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-
-	"bnhagame/game/characters"
+	"yourmodule/ai"
 )
 
-func StartDialogue(player *Player, c characters.Character) {
-	reader := bufio.NewReader(os.Stdin)
+func Talk(state *GameState, input string) string {
+	char := state.CurrentCharacter
 
-	fmt.Println("\nТы:", player.Name)
-	fmt.Print("Скажи что-нибудь: ")
+	// 1. Получаем СКРИПТОВЫЙ ответ
+	baseReply := char.React(input, state)
 
-	text, _ := reader.ReadString('\n')
-	response := c.React(text)
+	// 2. Решаем: нужен ли ИИ
+	if shouldUseAI(char) {
+		prompt := ai.BuildPrompt(
+			char,
+			state,
+			input,
+			baseReply,
+		)
 
-	fmt.Println(c.GetName()+":", response)
+		return ai.GenerateResponse(prompt)
+	}
+
+	// 3. Иначе — обычный ответ
+	return baseReply
+}
+
+func shouldUseAI(char Character) bool {
+	return char.GetRomance() >= 60
 }
