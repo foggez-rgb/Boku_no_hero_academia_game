@@ -7,6 +7,7 @@ const (
 	Angry
 	Annoyed
 	Friendly
+	Flustered // смущён / влюблён
 )
 
 type Character interface {
