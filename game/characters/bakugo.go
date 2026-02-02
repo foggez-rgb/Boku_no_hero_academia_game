@@ -3,14 +3,15 @@ package characters
 import "strings"
 
 type Bakugo struct {
-	mood      Mood
-	annoyance int
+	mood       Mood
+	annoyance  int
+	bond       int  // уровень привязанности
+	conversations int
 }
 
 func NewBakugo() *Bakugo {
 	return &Bakugo{
-		mood:      Neutral,
-		annoyance: 0,
+		mood: Neutral,
 	}
 }
 
@@ -23,27 +24,49 @@ func (b *Bakugo) GetMood() Mood {
 }
 
 func (b *Bakugo) Talk(input string) string {
+	b.conversations++
 	input = strings.ToLower(input)
 
-	// Если его бесят
+	// 💥 ОСКОРБЛЕНИЯ
 	if strings.Contains(input, "дурак") || strings.Contains(input, "тупой") {
 		b.annoyance++
+		b.bond -= 2
 		b.mood = Angry
-		return "ЧЁ ТЫ СКАЗАЛ, УБЛЮДОК?! Я ТЕБЯ ВЗОРВУ!"
+		return "ЧЁ ТЫ СКАЗАЛ?! ХОЧЕШЬ, ЧТОБ Я ТЕБЯ ВЗОРВАЛ?!"
 	}
 
-	// Если его хвалят
+	// 💬 ПОХВАЛА
 	if strings.Contains(input, "крутой") || strings.Contains(input, "сильный") {
+		b.bond += 2
+
+		if b.bond >= 6 {
+			b.mood = Flustered
+			return "Т-ТЫ ЧЁ НЕСЁШЬ, ИДИОТ?! Я НЕ ПРОСИЛ ТАКОГО!"
+		}
+
 		b.mood = Annoyed
-		return "Тц... Я и так это знаю. Не беси."
+		return "Тц… Хватит нести хрень."
 	}
 
-	// Если его раздражение выросло
+	// ❤️ МЯГКИЕ ФРАЗЫ
+	if strings.Contains(input, "мне нравится") || strings.Contains(input, "я люблю тебя") {
+		b.bond += 3
+		b.mood = Flustered
+		return "Ч-ЧЁ?! СОВСЕМ С УМА СОШЁЛ?! НЕ ВЗДУМАЙ ПОВТОРЯТЬ!"
+	}
+
+	// 😡 ПЕРЕГРЕВ
 	if b.annoyance >= 3 {
 		b.mood = Angry
-		return "ХВАТИТ МНЕ ТУТ ТРЫНДЕТЬ! ИСЧЕЗНИ!"
+		return "ХВАТИТ МНЕ ТУТ МОРГИ ЗАСОРЯТЬ! СВАЛИ!"
 	}
 
-	// Обычная реакция
-	return "Чё уставился? Говори нормально."
+	// 💖 СКРЫТАЯ ПРИВЯЗАННОСТЬ
+	if b.bond >= 8 {
+		b.mood = Flustered
+		return "…Чё ты всё ещё тут? Если уйдёшь — я не… не обрадуюсь."
+	}
+
+	// 🗯 ОБЫЧНО
+	return "Чё уставился? Говори уже."
 }
