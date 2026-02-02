@@ -1,0 +1,12 @@
+[
+  {
+    "name": "One For All",
+    "description": "Unlimited power",
+    "power_bonus": 1000
+  },
+  {
+    "name": "Explosion",
+    "description": "Explosive attacks",
+    "power_bonus": 300
+  }
+]
