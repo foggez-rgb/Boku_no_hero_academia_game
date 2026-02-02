@@ -1,7 +1,9 @@
 package game
 
 type Player struct {
-	Name  string
-	Power int
-	HP    int
+	Name string
+}
+
+func NewPlayer(name string) *Player {
+	return &Player{Name: name}
 }
