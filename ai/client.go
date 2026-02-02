@@ -1,8 +1,7 @@
 package ai
 
-func GenerateReply(prompt string) string {
-	// ПОКА ЗАГЛУШКА
-	// Потом тут будет OpenAI / local LLM
-
-	return prompt // временно просто возвращаем текст
+// Заглушка: позже подключим OpenAI / local LLM
+func GenerateResponse(prompt string) string {
+	// ВРЕМЕННО — имитация ИИ
+	return "[ИИ] " + prompt
 }
