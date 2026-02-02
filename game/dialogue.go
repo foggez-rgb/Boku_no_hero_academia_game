@@ -1,18 +1,21 @@
 package game
 
 import (
-	"math/rand"
-	"time"
+	"bufio"
+	"fmt"
+	"os"
 
-	"Boku_no_hero_academia_game/game/characters"
+	"bnhagame/game/characters"
 )
 
-func Talk(c characters.Character, topic string) string {
-	rand.Seed(time.Now().UnixNano())
+func StartDialogue(player *Player, c characters.Character) {
+	reader := bufio.NewReader(os.Stdin)
 
-	if answers, ok := c.Responses[topic]; ok {
-		return answers[rand.Intn(len(answers))]
-	}
+	fmt.Println("\nТы:", player.Name)
+	fmt.Print("Скажи что-нибудь: ")
 
-	return "Бакуго смотрит на тебя с раздражением..."
+	text, _ := reader.ReadString('\n')
+	response := c.React(text)
+
+	fmt.Println(c.GetName()+":", response)
 }
