@@ -1,9 +1,11 @@
 package ui
 
-import "fmt"
+import (
+	"fmt"
+	"yourmodule/game"
+)
 
-func ShowMainMenu() {
-	fmt.Println("=== Boku no Hero Academia ===")
-	fmt.Println("1. New Game")
-	fmt.Println("2. Exit")
+func ShowMainMenu(state *game.GameState) {
+	fmt.Println("1. Поговорить")
+	fmt.Println("2. Подарить подарок")
 }
