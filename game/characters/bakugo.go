@@ -1,72 +1,64 @@
 package characters
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type Bakugo struct {
-	mood       Mood
-	annoyance  int
-	bond       int  // уровень привязанности
-	conversations int
+	Name    string
+	Emotions Emotions
+	Memory   Memory
 }
 
 func NewBakugo() *Bakugo {
 	return &Bakugo{
-		mood: Neutral,
+		Name: "Бакуго Кацуки",
+		Emotions: Emotions{
+			Anger: 60,
+			Respect: 10,
+			Affection: 0,
+		},
 	}
 }
 
 func (b *Bakugo) GetName() string {
-	return "Бакуго Кацуки"
+	return b.Name
 }
 
-func (b *Bakugo) GetMood() Mood {
-	return b.mood
+func (b *Bakugo) React(text string) string {
+	b.Memory.TimesTalked++
+
+	lower := strings.ToLower(text)
+
+	if strings.Contains(lower, "привет") {
+		b.Emotions.Respect += 1
+		return "ЧЁ ТЫ ПРИПЁРСЯ?! ...Ладно, привет."
+	}
+
+	if strings.Contains(lower, "люблю") {
+		b.Emotions.Affection += 2
+		b.Emotions.Anger += 5
+		return "ЧТО ТЫ НЕСЁШЬ, ДЕБИЛ?! ...Тц."
+	}
+
+	if b.Emotions.Affection > 10 {
+		return "Не думай, что я стал мягче, ясно?!"
+	}
+
+	return "Хватит болтать. У меня тренировка."
 }
 
-func (b *Bakugo) Talk(input string) string {
-	b.conversations++
-	input = strings.ToLower(input)
+func (b *Bakugo) ReceiveGift(g Gift) {
+	b.Memory.LastGift = g.Name
+	b.Emotions.Affection += g.Affection
+	b.Emotions.Respect += g.Respect
+	b.Emotions.Anger += g.Anger
+}
 
-	// 💥 ОСКОРБЛЕНИЯ
-	if strings.Contains(input, "дурак") || strings.Contains(input, "тупой") {
-		b.annoyance++
-		b.bond -= 2
-		b.mood = Angry
-		return "ЧЁ ТЫ СКАЗАЛ?! ХОЧЕШЬ, ЧТОБ Я ТЕБЯ ВЗОРВАЛ?!"
-	}
-
-	// 💬 ПОХВАЛА
-	if strings.Contains(input, "крутой") || strings.Contains(input, "сильный") {
-		b.bond += 2
-
-		if b.bond >= 6 {
-			b.mood = Flustered
-			return "Т-ТЫ ЧЁ НЕСЁШЬ, ИДИОТ?! Я НЕ ПРОСИЛ ТАКОГО!"
-		}
-
-		b.mood = Annoyed
-		return "Тц… Хватит нести хрень."
-	}
-
-	// ❤️ МЯГКИЕ ФРАЗЫ
-	if strings.Contains(input, "мне нравится") || strings.Contains(input, "я люблю тебя") {
-		b.bond += 3
-		b.mood = Flustered
-		return "Ч-ЧЁ?! СОВСЕМ С УМА СОШЁЛ?! НЕ ВЗДУМАЙ ПОВТОРЯТЬ!"
-	}
-
-	// 😡 ПЕРЕГРЕВ
-	if b.annoyance >= 3 {
-		b.mood = Angry
-		return "ХВАТИТ МНЕ ТУТ МОРГИ ЗАСОРЯТЬ! СВАЛИ!"
-	}
-
-	// 💖 СКРЫТАЯ ПРИВЯЗАННОСТЬ
-	if b.bond >= 8 {
-		b.mood = Flustered
-		return "…Чё ты всё ещё тут? Если уйдёшь — я не… не обрадуюсь."
-	}
-
-	// 🗯 ОБЫЧНО
-	return "Чё уставился? Говори уже."
+func (b *Bakugo) PrintEmotions() {
+	fmt.Println("\nЭмоции Бакуго:")
+	fmt.Println("Злость:", b.Emotions.Anger)
+	fmt.Println("Уважение:", b.Emotions.Respect)
+	fmt.Println("Привязанность:", b.Emotions.Affection)
 }
